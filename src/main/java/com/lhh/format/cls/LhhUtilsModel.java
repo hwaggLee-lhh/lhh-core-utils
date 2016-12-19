@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -375,6 +376,25 @@ public class LhhUtilsModel {
         } catch (InstantiationException ex) {
             throw new IllegalArgumentException(ex.getMessage());
         } catch (IllegalAccessException ex) {
+            throw new IllegalArgumentException(ex.getMessage());
+        }
+    }
+    
+
+    /**转换非RuntimeException
+     * @param bean Object
+     * @param name String
+     * @return Object
+     * @see org.apache.commons.beanutils.PropertyUtils#getProperty(Object, String)
+     */
+    public static Object getProperty(Object bean, String name) {
+        try {
+            return PropertyUtils.getProperty(bean, name);
+        } catch (IllegalAccessException ex) {
+            throw new IllegalArgumentException(ex.getMessage());
+        } catch (InvocationTargetException ex) {
+            throw new IllegalArgumentException(ex.getMessage());
+        } catch (NoSuchMethodException ex) {
             throw new IllegalArgumentException(ex.getMessage());
         }
     }

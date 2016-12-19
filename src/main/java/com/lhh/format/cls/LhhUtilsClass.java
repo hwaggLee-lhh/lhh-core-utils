@@ -205,4 +205,74 @@ public class LhhUtilsClass {
 		}
 		return null;
 	}
+	
+	
+	
+
+    private static String getPrefixPrivate() {
+        StackTraceElement ste = new Throwable().getStackTrace()[2];
+        return ste.getClassName() + "." + ste.getMethodName() + ".";
+    }
+    
+    public static String getPrefix() {
+        StackTraceElement ste = new Throwable().getStackTrace()[1];
+        return ste.getClassName() + "." + ste.getMethodName() + ".";
+    }
+    
+    
+    /**
+     * 得到堆栈中第三个调用的类名，效果如下：
+     * public class UserCtrl {
+     *     public List findList() {
+     *         System.out.println(Ctrl.getMethodName());
+     *     };
+     * }
+     * 打印输出“UserCtrl”
+     * @return
+     */
+    public static String getClassName() {
+        return new Throwable().getStackTrace()[2].getClassName();
+    }
+    
+    /**
+     * 得到堆栈中第三个调用的方法名，效果如下：
+     * public class UserCtrl {
+     *     public List findList() {
+     *         System.out.println(Ctrl.getMethodName());
+     *     };
+     * }
+     * 打印输出“findList”
+     * @return
+     */
+    public static String getMethodName() {
+        return new Throwable().getStackTrace()[2].getMethodName();
+    }
+    
+	public static boolean isFromMethod(String mothodName) {
+        String methodName = new Throwable().getStackTrace()[2].getMethodName();
+        return methodName.equals(mothodName);
+    }
+    
+    public static boolean isNotFromMethod(String mothodName) {
+        String methodName = new Throwable().getStackTrace()[2].getMethodName();
+        return !methodName.equals(mothodName);
+    }
+    
+    public static String testGetPrefix() {
+        return getPrefixPrivate();
+    }
+    
+    public static String testGetClassName() {
+        return getClassName();
+    }
+    
+    public static String testGetMethodName() {
+        return getMethodName();
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(testGetPrefix());
+        System.out.println(testGetClassName());
+        System.out.println(testGetMethodName());
+    }
 }
