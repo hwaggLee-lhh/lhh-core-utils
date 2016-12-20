@@ -9,8 +9,8 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 
 /**
  * 汉字转拼音
- * @author huage
- * 2016年9月18日
+ * @author hwaggLee
+ * @createDate 2016年9月18日
  */
 public class LhhUtilsChineseToEnglish {
 	// 将汉字转换为全拼  

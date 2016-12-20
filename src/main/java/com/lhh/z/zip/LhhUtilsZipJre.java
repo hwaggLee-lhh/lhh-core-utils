@@ -17,8 +17,8 @@ import com.lhh.format.io.LhhUtilsIO;
 
 /**
  * zip文件处理(压缩处理时通过windows系统压缩的由于编码不是utf8的所以将导致中文抛出异常的情况)
- * @author huage
- *
+ * @author hwaggLee
+ * @createDate 2016年12月20日
  */
 public class LhhUtilsZipJre {
 

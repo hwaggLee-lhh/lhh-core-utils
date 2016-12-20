@@ -24,8 +24,8 @@ import com.lhh.security.encryption.LhhUtilsPassword;
 
 /**
  * app端token权限验证
- * @author zhaoerqi
- *
+ * @author hwaggLee
+ * @createDate 2016年12月20日
  */
 public class LhhFilterAppToken implements Filter{
 	

@@ -13,11 +13,9 @@ import java.util.zip.ZipOutputStream;
  * 大致功能包括用了多态，递归等JAVA核心技术，可以对单个文件和任意级联文件夹进行压缩和解压。 需在代码中自定义源输入路径和目标输出路径。 
  * <p> 
  * 在本段代码中，实现的是压缩部分；解压部分见本包中Decompression部分。 
- *  
- * @author HAN 
- *  
- */  
-  
+ * @author hwaggLee
+ * @createDate 2016年12月20日
+ */
 public class LhhMyZipCompressing {  
     private int k = 1; // 定义递归次数变量  
   

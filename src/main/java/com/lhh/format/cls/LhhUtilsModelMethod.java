@@ -5,10 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
 /**
  * 模型方法工具类
- * @author yejia
- *
+ * @author hwaggLee
+ * @createDate 2016年12月20日
  */
 public class LhhUtilsModelMethod {
     private static Map<String, MethodsGetAndSet>  cacheMethod = new HashMap<String, MethodsGetAndSet>();

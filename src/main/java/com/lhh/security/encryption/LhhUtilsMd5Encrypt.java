@@ -7,10 +7,9 @@ import com.lhh.format.algorithm.LhhUtilsBinaryConvert;
 
 /**
  * 功能：md5加密处理类
- * 版本：1.0
- * 日期：2010-12-21
- * 作者：feng
- **/
+ * @author hwaggLee
+ * @createDate 2016年12月20日
+ */
 public class LhhUtilsMd5Encrypt {
 	
 	/**

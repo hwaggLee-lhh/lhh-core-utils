@@ -88,6 +88,13 @@
 			<version>5.0.7</version>
 		</dependency>
 		
+		<!-- oracle 
+			<dependency> 
+				<groupId>com.oracle</groupId> 
+				<artifactId>ojdbc14</artifactId> 
+			<version>10.2.0.3.0</version> 
+			</dependency> 
+		-->
 		<!-- zip解压 -->
 		<dependency>
 			<groupId>org.apache.ant</groupId>

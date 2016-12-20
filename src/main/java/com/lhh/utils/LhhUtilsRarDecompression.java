@@ -18,6 +18,8 @@ import de.innosystec.unrar.rarfile.FileHeader;
 /**
  * RAR格式压缩文件解压工具类 不支持RAR格式压缩 支持中文,支持RAR压缩文件密码 依赖jar包 commons-io.jar
  * commons-logging.jar java-unrar-decryption-supported.jar gnu-crypto.jar
+ * @author hwaggLee
+ * @createDate 2016年12月20日
  */
 public class LhhUtilsRarDecompression {
 	public static final String SEPARATOR = File.separator;

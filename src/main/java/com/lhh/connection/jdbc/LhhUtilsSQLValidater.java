@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.lhh.connection.jdbc;
 
 import org.slf4j.Logger;
@@ -9,7 +6,9 @@ import org.slf4j.LoggerFactory;
 /**
  * <p>Title: 数据库操作SQL语句检验类 </p>
  * <p>Description: 提供标准的SQL语句检验方法 </p>
- * @date 2010-12-12     */
+ * @author hwaggLee
+ * @createDate 2016年12月20日
+ */
 public class LhhUtilsSQLValidater {
 	
 	private static  final Logger log = LoggerFactory.getLogger(LhhUtilsSQLValidater.class);

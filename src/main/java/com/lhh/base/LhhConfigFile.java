@@ -8,6 +8,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedHashMap;
 
 import org.apache.log4j.Logger;
+
+import com.lhh.LhhUtils;
 public class LhhConfigFile {
     public static final Logger log = Logger.getLogger(LhhConfigFile.class);
 
@@ -46,7 +48,12 @@ public class LhhConfigFile {
     /**
      * 从classpath重新读取配置文件
      */
-    public void reload() {
+    private void reload() {
+    	//防止配置文件中多配置了根路径参数classpath
+    	String fileName = this.fileName;
+    	if( this.fileName.trim().toLowerCase().startsWith(LhhUtils.ehcacheClassPathName)){
+    		fileName = this.fileName.substring(LhhUtils.ehcacheClassPathName.length());
+    	}
         InputStream stream = getClass().getClassLoader().getResourceAsStream(fileName);
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(stream, charsetName));
