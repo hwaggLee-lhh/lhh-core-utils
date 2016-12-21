@@ -1,4 +1,4 @@
-package com.lhh.z.zip;
+package com.lhh.format.io;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
