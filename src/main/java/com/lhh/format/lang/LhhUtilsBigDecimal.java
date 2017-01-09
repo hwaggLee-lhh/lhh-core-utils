@@ -22,8 +22,8 @@ public class LhhUtilsBigDecimal {
      * @param two
      * @return
      */
-    public static BigDecimal multiply(BigDecimal one, BigDecimal two) {
-        return multiply(one, two, 2);
+    public static BigDecimal algorithmMultiply(BigDecimal one, BigDecimal two) {
+        return algorithmMultiply(one, two, 2);
     }
 
     /**
@@ -35,7 +35,7 @@ public class LhhUtilsBigDecimal {
      *            保留位数
      * @return
      */
-    public static BigDecimal multiply(BigDecimal one, BigDecimal two, int scale) {
+    public static BigDecimal algorithmMultiply(BigDecimal one, BigDecimal two, int scale) {
         return one.multiply(two).setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
 
@@ -46,26 +46,68 @@ public class LhhUtilsBigDecimal {
      * @param two
      * @return
      */
-    public static BigDecimal multiply(BigDecimal one, BigDecimal two, BigDecimal three) {
+    public static BigDecimal algorithmMultiply(BigDecimal one, BigDecimal two, BigDecimal three) {
         return one.multiply(two).multiply(three).setScale(2, BigDecimal.ROUND_HALF_UP);
     }
+	/**
+	 * 乘积，并四舍五入RoundingMode.HALF_UP,如果value=null or two则返回默认值
+	 * @param value
+	 * @param scale
+	 * @param defaultValue
+	 * @return
+	 */
+	public static String algorithmMultiplyScaleToStr(BigDecimal value, BigDecimal two,int scale,String defaultValue){
+		if( value == null || two == null ) return defaultValue;
+		return value.multiply(two).setScale(scale,RoundingMode.HALF_UP).toString();
+	}
 
-    public static BigDecimal divide(BigDecimal numerator, BigDecimal denominator) {
-        return divide(numerator, denominator, 2);
+    public static BigDecimal algorithmDivide(BigDecimal numerator, BigDecimal denominator) {
+        return algorithmDivide(numerator, denominator, 2);
     }
 
-    public static BigDecimal divide(BigDecimal numerator, BigDecimal denominator, int scale) {
+    public static BigDecimal algorithmDivide(BigDecimal numerator, BigDecimal denominator, int scale) {
         return numerator.divide(denominator, scale, BigDecimal.ROUND_HALF_UP);
     }
 
-    public static BigDecimal setScale(BigDecimal decimal) {
-        return decimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+	/**
+	 * 减法，并四舍五入RoundingMode.HALF_UP,如果value=null则返回默认值,denominator=为空则返回value的四舍五入值
+	 * @param value
+	 * @param denominator
+	 * @param scale
+	 * @param defaultValue
+	 * @return
+	 */
+    public static String algorithmSubtractScaleToStr(BigDecimal value, BigDecimal denominator,int scale,String defaultValue){
+    	if( value == null )return defaultValue;
+    	if( denominator == null || compareTo1Eq2(denominator, ZERO))return value.setScale(scale,RoundingMode.HALF_UP).toString();
+        return value.subtract(denominator).setScale(scale,RoundingMode.HALF_UP).toString();
+    }
+    
+    /**
+     * 
+	 * 减法，并四舍五入RoundingMode.HALF_UP,如果value=null则返回默认值,denominator=为空则返回value的四舍五入值
+	 * 转换成BigDecimal时出现异常则返回defaultValue
+     * @param value
+     * @param denominator
+     * @param scale
+     * @param defaultValue：默认值
+     * @return
+     */
+    public static String algorithmSubtractScaleToStr(String value, String denominator,int scale,String defaultValue){
+    	if( StringUtils.isBlank(value) )return defaultValue;
+    	if( StringUtils.isBlank(denominator) )return value;
+    	try {
+			BigDecimal v = new BigDecimal(value);
+			BigDecimal d = new BigDecimal(denominator);
+			return v.subtract(d).setScale(scale,RoundingMode.HALF_UP).toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return defaultValue;
     }
 
-    public static BigDecimal setScale(int scale, BigDecimal decimal) {
-        return decimal.setScale(scale, BigDecimal.ROUND_HALF_UP);
-    }
-
+	
+	
     /**
      * 解析String为BigDecimal，如果str为空返回0，如果抛出NumberFormatException，返回0
      * 
@@ -73,8 +115,8 @@ public class LhhUtilsBigDecimal {
      *            需要解析的数字
      * @return BigDecimal
      */
-    public static BigDecimal valueOf(String str) {
-        return valueOf(str, ZERO);
+    public static BigDecimal formatStringToBigDecimalValueOf(String str) {
+        return formatStringToBigDecimalValueOf(str, ZERO);
     }
 
     /**
@@ -85,7 +127,7 @@ public class LhhUtilsBigDecimal {
      * @param defaultValue
      * @return BigDecimal
      */
-    public static BigDecimal valueOf(String str, BigDecimal defaultValue) {
+    public static BigDecimal formatStringToBigDecimalValueOf(String str, BigDecimal defaultValue) {
         if (StringUtils.isEmpty(str)) {
             return defaultValue;
         }
@@ -103,7 +145,7 @@ public class LhhUtilsBigDecimal {
      * @param scale
      * @return
      */
-    public static String valueOfScale(String str, int scale) {
+    public static String formatStringToBigDecimalValueOfScale(String str, int scale) {
         if (StringUtils.isBlank(str)) {
             return str;
         }
@@ -123,7 +165,7 @@ public class LhhUtilsBigDecimal {
      * @return
      */
     @SuppressWarnings("all")
-    public static String toString(BigDecimal bd) {
+    public static String formatBigDecimalToString(BigDecimal bd) {
     	if(bd==null) return null;
     	String version = System.getProperty("java.version");
     	version = version.replaceAll("\\.", "");
@@ -143,7 +185,7 @@ public class LhhUtilsBigDecimal {
     	return bd.toString();
     }
     
-    public static String format(BigDecimal decimal, String pattern) {
+    public static String formatBigDecimalToString(BigDecimal decimal, String pattern) {
         double dd = decimal.doubleValue();
         if (dd == 0) {
             return decimal.toString();
@@ -154,6 +196,104 @@ public class LhhUtilsBigDecimal {
     
 
 	
+	/**
+	 * 转String，并四舍五入RoundingMode.HALF_UP,如果value=null则返回默认值
+	 * @param value
+	 * @param scale
+	 * @param defaultValue
+	 * @return
+	 */
+	public static String formatBigDecimalToStringScale(BigDecimal value,int scale,String defaultValue){
+		if(value == null ) return defaultValue;
+		return value.setScale(scale,RoundingMode.HALF_UP).toString();
+	}
+	
+
+	/**
+	 * 转String,如果value=null则返回默认值
+	 * @param value
+	 * @param scale
+	 * @param defaultValue
+	 * @param mode
+	 * @return
+	 */
+	public static String formatBigDecimalToStringScale(BigDecimal value,int scale,String defaultValue,RoundingMode mode){
+		if(value == null ) return defaultValue;
+		return value.setScale(scale,mode).toString();
+	}
+	
+	/**
+	 * String转bigdecimal
+	 * @param value
+	 * @param scale
+	 * @param defaultValue
+	 * @return
+	 */
+	public static BigDecimal formatStringToBigDecimalScale(String value,int scale,BigDecimal defaultValue){
+		if(StringUtils.isBlank(value))return defaultValue;
+		try {
+			return new BigDecimal(value).setScale(scale,RoundingMode.HALF_UP);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return defaultValue;
+	}
+
+	public static BigDecimal formatStringToBigDecimalScale(Object value,int scale,BigDecimal defaultValue){
+		if(value == null )return defaultValue;
+		return formatStringToBigDecimalScale(value.toString(), scale, defaultValue);
+	}
+	/**
+	 * bigdecimal格式化成字符串
+	 * @param b
+	 * @param scale
+	 * @param model
+	 * @return
+	 */
+	public static String formatBigDecimalToString(BigDecimal b,int scale,RoundingMode model){
+		if( b == null )return null;
+		return b.setScale(scale,model).toString();
+	}
+	public static String formatBigDecimalToStringDivide(BigDecimal numerator, BigDecimal denominator, int scale,RoundingMode model) {
+		if( numerator == null ||  denominator == null || denominator.compareTo(BigDecimal.ZERO) == 0 ) return null;
+		BigDecimal b = numerator.divide(denominator, scale, model);
+        return formatBigDecimalToString(b, scale, model);
+    }
+	
+	public static BigDecimal formatBigDecimalToMillion(Long num,int scale){
+		if(num==null )return BigDecimal.ZERO;
+		return new BigDecimal(num).divide(new BigDecimal(10000), scale, BigDecimal.ROUND_HALF_UP);
+	}
+	public static BigDecimal formatBigDecimalToMillion(BigDecimal bigDecimal,int scale){
+		if(bigDecimal==null )return BigDecimal.ZERO;
+		return bigDecimal.divide(new BigDecimal(10000), scale, BigDecimal.ROUND_HALF_UP);
+	}
+
+	public static BigDecimal formatBigDecimalToBillion(BigDecimal bigDecimal,int scale){
+		if(bigDecimal==null )return BigDecimal.ZERO;
+		return bigDecimal.divide(new BigDecimal(100000000), scale, BigDecimal.ROUND_HALF_UP);
+	}
+
+	public static BigDecimal formatBigDecimalToBillion(Long num,int scale){
+		if(num==null )return BigDecimal.ZERO;
+		return new BigDecimal(num).divide(new BigDecimal(100000000), scale, BigDecimal.ROUND_HALF_UP);
+	}
+
+
+	
+	public static BigDecimal setScale(BigDecimal num,int scale){
+		if(num==null)return BigDecimal.ZERO;
+		return num.setScale(scale,BigDecimal.ROUND_HALF_UP);
+	}
+
+    public static BigDecimal setScale(BigDecimal decimal) {
+        return decimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+
+    public static BigDecimal setScale(int scale, BigDecimal decimal) {
+        return decimal.setScale(scale, BigDecimal.ROUND_HALF_UP);
+    }
+
 	/**
 	 * 比较是否相等
 	 * @param d1
@@ -194,127 +334,5 @@ public class LhhUtilsBigDecimal {
 	}
 	
 	
-	/**
-	 * 转String，并四舍五入RoundingMode.HALF_UP,如果value=null则返回默认值
-	 * @param value
-	 * @param scale
-	 * @param defaultValue
-	 * @return
-	 */
-	public static String toStringScale(BigDecimal value,int scale,String defaultValue){
-		if(value == null ) return defaultValue;
-		return value.setScale(scale,RoundingMode.HALF_UP).toString();
-	}
-	
-
-	/**
-	 * 转String,如果value=null则返回默认值
-	 * @param value
-	 * @param scale
-	 * @param defaultValue
-	 * @param mode
-	 * @return
-	 */
-	public static String toStringScale(BigDecimal value,int scale,String defaultValue,RoundingMode mode){
-		if(value == null ) return defaultValue;
-		return value.setScale(scale,mode).toString();
-	}
-	
-	/**
-	 * String转bigdecimal
-	 * @param value
-	 * @param scale
-	 * @param defaultValue
-	 * @return
-	 */
-	public static BigDecimal toBigDecimalScale(String value,int scale,BigDecimal defaultValue){
-		if(StringUtils.isBlank(value))return defaultValue;
-		try {
-			return new BigDecimal(value).setScale(scale,RoundingMode.HALF_UP);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return defaultValue;
-	}
-
-	public static BigDecimal toBigDecimalScale(Object value,int scale,BigDecimal defaultValue){
-		if(value == null )return defaultValue;
-		return toBigDecimalScale(value.toString(), scale, defaultValue);
-	}
-	
-	/**
-	 * 乘积，并四舍五入RoundingMode.HALF_UP,如果value=null or two则返回默认值
-	 * @param value
-	 * @param scale
-	 * @param defaultValue
-	 * @return
-	 */
-	public static String multiplyScaleToStr(BigDecimal value, BigDecimal two,int scale,String defaultValue){
-		if( value == null || two == null ) return defaultValue;
-		return value.multiply(two).setScale(scale,RoundingMode.HALF_UP).toString();
-	}
-	
-	
-
-	/**
-	 * 减法，并四舍五入RoundingMode.HALF_UP,如果value=null则返回默认值,denominator=为空则返回value的四舍五入值
-	 * @param value
-	 * @param denominator
-	 * @param scale
-	 * @param defaultValue
-	 * @return
-	 */
-    public static String subtractScaleToStr(BigDecimal value, BigDecimal denominator,int scale,String defaultValue){
-    	if( value == null )return defaultValue;
-    	if( denominator == null || compareTo1Eq2(denominator, ZERO))return value.setScale(scale,RoundingMode.HALF_UP).toString();
-        return value.subtract(denominator).setScale(scale,RoundingMode.HALF_UP).toString();
-    }
-    
-    /**
-     * 
-	 * 减法，并四舍五入RoundingMode.HALF_UP,如果value=null则返回默认值,denominator=为空则返回value的四舍五入值
-	 * 转换成BigDecimal时出现异常则返回defaultValue
-     * @param value
-     * @param denominator
-     * @param scale
-     * @param defaultValue：默认值
-     * @return
-     */
-    public static String subtractScaleToStr(String value, String denominator,int scale,String defaultValue){
-    	if( StringUtils.isBlank(value) )return defaultValue;
-    	if( StringUtils.isBlank(denominator) )return value;
-    	try {
-			BigDecimal v = new BigDecimal(value);
-			BigDecimal d = new BigDecimal(denominator);
-			return v.subtract(d).setScale(scale,RoundingMode.HALF_UP).toString();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-    	return defaultValue;
-    }
-
-	public static BigDecimal toMillion(Long num,int scale){
-		if(num==null )return BigDecimal.ZERO;
-		return new BigDecimal(num).divide(new BigDecimal(10000), scale, BigDecimal.ROUND_HALF_UP);
-	}
-	public static BigDecimal toMillion(BigDecimal bigDecimal,int scale){
-		if(bigDecimal==null )return BigDecimal.ZERO;
-		return bigDecimal.divide(new BigDecimal(10000), scale, BigDecimal.ROUND_HALF_UP);
-	}
-
-	public static BigDecimal toBillion(BigDecimal bigDecimal,int scale){
-		if(bigDecimal==null )return BigDecimal.ZERO;
-		return bigDecimal.divide(new BigDecimal(100000000), scale, BigDecimal.ROUND_HALF_UP);
-	}
-
-	public static BigDecimal toBillion(Long num,int scale){
-		if(num==null )return BigDecimal.ZERO;
-		return new BigDecimal(num).divide(new BigDecimal(100000000), scale, BigDecimal.ROUND_HALF_UP);
-	}
-
-	public static BigDecimal setScale(BigDecimal num,int scale){
-		if(num==null)return BigDecimal.ZERO;
-
-		return num.setScale(scale,BigDecimal.ROUND_HALF_UP);
-	}
 }
+

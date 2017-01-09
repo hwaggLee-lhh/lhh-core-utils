@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.lhh.connection.url.LhhUtilsRequest;
+import com.lhh.connection.server.LhhUtilsRequest;
 import com.lhh.security.encryption.LhhUtilsPassword;
 
 /**
