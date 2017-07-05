@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import junit.framework.Assert;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -40,7 +38,6 @@ public class LhhFilterSessionTimeOut implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse)res;
         HttpSession session = httpRequest.getSession();
         log.debug(""+httpRequest.getRequestURI());
-        Assert.assertNotNull(backUrl, "backUrl is null");
         if (session != null) {
         	String username = (String)session.getAttribute("username");
             String contextPath = httpRequest.getContextPath();

@@ -10,6 +10,12 @@ import java.util.LinkedHashMap;
 import org.apache.log4j.Logger;
 
 import com.lhh.LhhUtils;
+
+/**
+ * 属性配置文件加载
+ * @author hwaggLee
+ *
+ */
 public class LhhConfigFile {
     public static final Logger log = Logger.getLogger(LhhConfigFile.class);
 

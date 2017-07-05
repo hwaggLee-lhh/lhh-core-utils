@@ -34,6 +34,7 @@ public class LhhUtilsDES {
 	 * @return
 	 */
 	public static String getEncryptString(String str) {
+		
 		BASE64Encoder base64en = new BASE64Encoder();
 		try {
 			byte[] strBytes = str.getBytes("UTF8");

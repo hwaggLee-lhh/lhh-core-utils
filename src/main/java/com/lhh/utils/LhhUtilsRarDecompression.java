@@ -36,7 +36,6 @@ public class LhhUtilsRarDecompression {
 	/**
 	 * 批量处理
 	 * @param path
-	 * @param pathExtract
 	 * @param encoding
 	 */
 	public static void unrarS(String path, String password){

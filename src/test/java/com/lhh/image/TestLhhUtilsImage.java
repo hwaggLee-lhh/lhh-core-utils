@@ -12,8 +12,7 @@ import org.junit.Test;
 public class TestLhhUtilsImage {
 
 	@Test public void testReplaceICADWithWhiteColor(){
-		System.out.println("==============================>");
-		String parent = "C:\\Users\\huage\\Downloads\\";
+		/*String parent = "C:\\Users\\huage\\Downloads\\";
 		String path = parent+"sfz_zm.png";
 		File file = new File(path);
 		FileInputStream input = null;
@@ -32,7 +31,7 @@ public class TestLhhUtilsImage {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
 	}
 	
 }
